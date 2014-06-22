@@ -1,13 +1,16 @@
 Refinery::Core::Engine.routes.draw do
   namespace :blog, :path => Refinery::Blog.page_url do
-    root :to => "posts#index"
+    root :to => "channels#index"
     resources :posts, :only => [:show]
 
     match 'feed.rss', :to => 'posts#index', :as => 'rss_feed', :defaults => {:format => "rss"}
-    match 'categories/:id', :to => 'categories#show', :as => 'category'
+    # match 'categories/:id', :to => 'categories#show', :as => 'category'
+    match ':channel', :to => 'channels#show', :as => 'channel'
     match ':id/comments', :to => 'posts#comment', :as => 'comments'
     get 'archive/:year(/:month)', :to => 'posts#archive', :as => 'archive_posts'
     get 'tagged/:tag_id(/:tag_name)' => 'posts#tagged', :as => 'tagged_posts'
+
+    get ':channel/categories/:id', :to => 'categories#show', :as => 'category'
   end
 
   namespace :blog, :path => '' do
@@ -21,6 +24,8 @@ Refinery::Core::Engine.routes.draw do
             get :tags
           end
         end
+
+        resources :channels
 
         resources :categories
 

@@ -1,0 +1,20 @@
+- content_for :body_class, 'blog'
+- content_for :body_content_title, @channel.title
+
+#blog
+	#channel-header.content-container
+		%h1
+			= raw(@channel.title)
+		%h2
+			= raw(@channel.sub_title)
+
+	.content-container
+		- if @posts.any?
+			%section#blog_posts
+				= render :partial => "/refinery/blog/shared/post", :collection => @posts
+				= will_paginate @posts
+		- else
+			%p= t('.no_blog_articles_yet')
+
+		%section#sidebar.right
+			= render :partial => "/refinery/blog/shared/blog_sidebar"

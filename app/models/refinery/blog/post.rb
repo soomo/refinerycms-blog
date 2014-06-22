@@ -12,6 +12,7 @@ module Refinery
       default_scope :order => 'published_at DESC'
 
       belongs_to :author, :class_name => 'Refinery::User', :foreign_key => :user_id, :readonly => true
+      belongs_to :channel
 
       has_many :comments, :dependent => :destroy, :foreign_key => :blog_post_id
       acts_as_taggable
@@ -21,8 +22,9 @@ module Refinery
 
       acts_as_indexed :fields => [:title, :body]
 
-      validates :title, :presence => true, :uniqueness => true
+      validates :title, :presence => true
       validates :body,  :presence => true
+      validates :slug,  :presence => true, :uniqueness => true
 
       validates :source_url, :url => { :if => 'Refinery::Blog.validate_source_url',
                                       :update => true,
@@ -32,7 +34,7 @@ module Refinery
 
       attr_accessible :title, :body, :custom_teaser, :tag_list, :draft, :published_at, :custom_url, :author
       attr_accessible :browser_title, :meta_keywords, :meta_description, :user_id, :category_ids
-      attr_accessible :source_url, :source_url_title
+      attr_accessible :source_url, :source_url_title, :channel_id
 
       self.per_page = Refinery::Blog.posts_per_page
 
@@ -45,11 +47,19 @@ module Refinery
       end
 
       def live?
-        !draft and published_at <= Time.now
+        !draft and published_at <= Time.now and channel.published == true
       end
 
       def friendly_id_source
         custom_url.present? ? custom_url : title
+      end
+
+      def channel_slug
+        channel.slug
+      end
+
+      def channel_categories
+        channel.categories
       end
 
       class << self
@@ -73,16 +83,16 @@ module Refinery
           unscoped.order("access_count DESC").limit(count)
         end
 
-        def previous(item)
-          published_before(item.published_at).first
-        end
-
         def uncategorized
           live.includes(:categories).where(Refinery::Categorization.table_name => { :blog_category_id => nil })
         end
 
-        def next(current_record)
-          where(["published_at > ? and draft = ?", current_record.published_at, false]).first
+        def previous(item)
+          where(["published_at < ? and channel_id = ? and draft = ?", item.published_at, item.channel_id, false]).first
+        end
+
+        def next(item)
+          where(["published_at > ? and channel_id = ? and draft = ?", item.published_at, item.channel_id, false]).first
         end
 
         def published_before(date=Time.now)

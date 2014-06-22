@@ -5,6 +5,13 @@ en:
         title: Blog
     blog:
       admin:
+        channels:
+          channel:
+            edit: Edit this channel
+            delete: Delete this channel forever
+          index:
+            no_items_yet: 'There are no channels yet. Click "%{create}" to add your first category.'
+
         categories:
           category:
             edit: Edit this category
@@ -114,6 +121,9 @@ en:
         archives: Archives
         tags:
           title: "Tags"
+      channels:
+        show:
+          no_posts: There are no posts here yet.
       categories:
         show:
           no_posts: There are no posts here yet.
