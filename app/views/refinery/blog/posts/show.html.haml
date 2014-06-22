@@ -1,0 +1,8 @@
+- content_for :body_class, 'blog'
+- content_for :stylesheets, stylesheet_link_tag('refinery/blog/frontend')
+
+#blog
+  #show_blog_post.content-container
+    = render 'post'
+    / - if Refinery::Blog::Post.comments_allowed?
+    /   = render 'comments'

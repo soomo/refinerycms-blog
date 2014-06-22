@@ -10,6 +10,11 @@
     <%= f.text_field :title, :class => 'larger widest' -%>
   </div>
 
+  <div class="field">
+    <%= f.label :channel_id, "Blog" -%>
+    <%= f.select(:channel_id, Refinery::Blog::Channel.all.collect {|a| [a.title, a.id]}) -%>
+  </div>
+
   <div class='field'>
     <div id='page-tabs' class='clearfix ui-tabs ui-widget ui-widget-content ui-corner-all'>
       <ul id='page_parts'>

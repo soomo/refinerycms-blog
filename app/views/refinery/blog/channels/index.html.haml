@@ -1,0 +1,20 @@
+- content_for :body_class, 'blog'
+- content_for :stylesheets, stylesheet_link_tag('refinery/blog/frontend')
+
+#blog
+	#channel-list-header.content-container.padded
+		= raw(@page.content_for(:body))
+
+	#channel-list.content-container
+		- if @channels.any?
+			- @channels.each do | channel |
+				.entry
+					- if channel.thumbnail_image.present?
+						.image
+							= link_to image_tag(channel.thumbnail_image.thumbnail("420x220>").url), "/blogs/#{channel.slug}"
+					%h3
+						= channel.sub_title
+					%p
+						= channel.description
+					%p
+						= link_to "Welcome", "/blogs/#{channel.slug}", :class => "links-arrow"

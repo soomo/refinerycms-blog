@@ -1,0 +1,10 @@
+<% if categories.any? %>
+  <h3>Show Only</h3>
+  <ul id='categories'>
+    <% categories.each do |category| %>
+      <li<%= " class=selected" if @category.present? and @category.id == category.id %>>
+        <%= link_to "#{category.title} (#{category.post_count})", refinery.blog_category_path(:channel => @post.channel_slug, :id => category) %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

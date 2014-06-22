@@ -1,0 +1,51 @@
+<%= form_for [refinery, :blog_admin, @channel] do |f| -%>
+  <%= render :partial => "/refinery/admin/error_messages",
+             :locals => {
+               :object => f.object,
+               :include_object_name => true
+             } %>
+
+  <div class='field'>
+    <%= f.label :slug -%>
+    <%= f.text_field :slug, :class => 'larger widest' -%>
+  </div>
+  <div class='field'>
+    <%= f.label :title -%>
+    <%= f.text_field :title, :class => 'larger widest' -%>
+  </div>
+  <div class='field'>
+    <%= f.label :sub_title -%>
+    <%= f.text_field :sub_title, :class => 'larger widest' -%>
+  </div>
+  <div class='field'>
+    <%= f.label :description -%>
+    <%= f.text_area :description, :class => 'larger widest' -%>
+  </div>
+  <div class='field'>
+    <%= f.label :published -%>
+    <%= f.select :published, [['False',false],['True',true]] %>
+  </div>
+    <div class='field'>
+    <%= f.label :in_splitter -%>
+    <%= f.select :in_splitter, [['False',false],['True',true]] %>
+  </div>
+
+  <h2>Blog Logo</h2>
+  <div class="field">
+    <%= f.label :thumbnail_image, "Shows an image for the blog on the blog splitter." %>
+    <%= render :partial => "/refinery/admin/image_picker", :locals => {
+      :f => f,
+      :field => :thumbnail_image_id,
+      :image => f.object.thumbnail_image,
+      :toggle_image_display => false
+    }
+    %>
+  </div>
+
+  <%= render :partial => "/refinery/admin/form_actions",
+              :locals => {
+                :f => f,
+                :continue_editing => false,
+                :delete_title => "Delete"
+              } %>
+<% end %>
