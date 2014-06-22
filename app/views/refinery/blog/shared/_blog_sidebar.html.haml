@@ -1,0 +1,14 @@
+-if @channel and @channel.thumbnail_image.present?
+  #blog-image
+    = image_tag @channel.thumbnail_image.thumbnail("180x90>").url
+
+= render :partial => "/refinery/blog/shared/follow_links"
+
+-if @channel and @channel.slug == 'wgu'
+  = render :partial => "/refinery/blog/channels/wgu/sidebar"
+
+-if @channel and @channel.slug != 'status'
+  = render :partial => "/refinery/blog/shared/blog_categories", :locals => { :categories => @categories }
+-elsif @post
+  = render :partial => "/refinery/blog/shared/post_categories", :locals => { :categories => @post.channel_categories }
+

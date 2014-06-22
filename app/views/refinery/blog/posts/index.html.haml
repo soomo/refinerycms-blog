@@ -1,0 +1,12 @@
+- content_for :body_class, 'blog'
+- content_for :stylesheets, stylesheet_link_tag('refinery/blog/frontend')
+- content_for :body_content_title, @channel.title
+
+#blog
+  .content-container
+    - if @posts.any?
+      %section#blog_posts
+        = render :partial => "/refinery/blog/shared/post", :collection => @posts
+        = will_paginate @posts
+    - else
+      %p= t('.no_blog_articles_yet')

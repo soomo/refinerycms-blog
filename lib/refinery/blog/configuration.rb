@@ -8,10 +8,10 @@ module Refinery
     self.validate_source_url = false
     self.comments_per_page = 10
     self.posts_per_page = 10
-    self.post_teaser_length = 250
+    self.post_teaser_length = 500
     self.share_this_key = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-    self.page_url = "/blog"
-  
+    self.page_url = "/blogs"
+
     # Refinery::User isn't available when this line gets hit, so we use static methods instead
     @@user_class_name = nil
     class << self

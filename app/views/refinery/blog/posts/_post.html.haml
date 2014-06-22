@@ -1,0 +1,39 @@
+- flash.each do |key, value|
+  #flash{:class => "flash flash_#{key}"}
+    = value
+%article#blog_post.blog_post
+  .post-author
+    .year
+      = @post.published_at.to_date.strftime("%Y")
+    .photo
+      - if @post.author.thumbnail_image.present?
+        = image_tag @post.author.thumbnail_image.thumbnail("100x110#").url
+    .month
+      = @post.published_at.to_date.strftime("%b")
+
+  .post-wrap
+    %header
+      %h1= @post.title
+    = @post.body.html_safe
+
+    %section.details
+      %time.posted_at{:datetime => @post.published_at.to_date, :format => :default}
+        = t('created_at', :scope => 'refinery.blog.shared.posts', :when => l(@post.published_at.to_date, :format => :short))
+      - if @post.author.present?
+        by
+        = @post.author.username
+      - if (categories = @post.categories).any?
+        in
+        - categories.each_with_index do |category, index|
+          = link_to category.title, refinery.blog_category_path(:channel => @post.channel_slug, :id => category)
+          = ',' if index < ((categories.length) - 1)
+
+  = render 'nav'
+
+  - if Refinery::Blog::Post.comments_allowed?
+    = render 'comments'
+
+%section#sidebar.right
+  = render :partial => '/refinery/blog/shared/blog_sidebar'
+
+= render :partial => '/refinery/draft_page_message' unless @post.nil? or @post.live?

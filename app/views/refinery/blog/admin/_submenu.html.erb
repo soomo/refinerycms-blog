@@ -49,6 +49,23 @@
     </ul>
   <% end %>
 
+
+  <ul class='collapsible_menu'>
+    <li class='not_a_link'>
+      <%= link_to "Channels", '#',
+                  :class => 'folder_icon' %>
+    </li>
+    <li>
+      <%= link_to "Manage", refinery.blog_admin_channels_path,
+                  :class => 'folder_edit_icon' %>
+    </li>
+    <li>
+      <%= link_to "Create New", refinery.new_blog_admin_channel_path,
+                  :class => 'folder_add_icon' %>
+    </li>
+  </ul>
+
+
   <ul class='collapsible_menu'>
     <li class='not_a_link'>
       <%= link_to t('.categories.title'), '#',

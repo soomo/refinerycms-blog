@@ -1,0 +1,12 @@
+- content_for :body_class, 'blog'
+- content_for :title, "#{t('.blog_archive_for', :date => @archive_date.strftime('%B %Y'))}"
+- content_for :body_content_left do
+  %h1= t('.blog_archive_for', :date => @archive_date.strftime('%B %Y'))
+  - if @posts.any?
+    %section#blog_posts
+      = render :partial => "/refinery/blog/shared/post", :collection => @posts
+  - else
+    %p= t('.no_blog_articles_posted', :date => @archive_date.strftime('%B %Y'))
+= render :partial => '/refinery/blog/shared/body_content_right'
+= render :partial => "/refinery/content_page"
+- content_for :stylesheets, stylesheet_link_tag('refinery/blog/frontend')
