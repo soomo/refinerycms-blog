@@ -33,6 +33,21 @@ module Refinery
         "http://gravatar.com/avatar/#{Digest::MD5.hexdigest(email.to_s.strip.downcase)}?s=#{options[:size]}.jpg"
       end
 
+      def twitter_link(channel)
+        default = 'https://twitter.com/SoomoLearning'
+
+        case channel
+        when 'poliscilounge'
+          'https://twitter.com/poliscilounge'
+        when 'psychlounge'
+          'https://twitter.com/SoomoPsych'
+        when 'news'
+          default
+        else
+          default
+        end
+      end
+
       class ArchiveWidget
         delegate :t, :link_to, :refinery, :render, :to => :view_context
         attr_reader :view_context
