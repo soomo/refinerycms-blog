@@ -36,7 +36,9 @@ module Refinery
       def twitter_link(channel)
         default = 'https://twitter.com/SoomoLearning'
 
-        case channel
+        slug = channel.present? ? channel.slug : ''
+
+        case slug
         when 'poliscilounge'
           'https://twitter.com/poliscilounge'
         when 'psychlounge'
