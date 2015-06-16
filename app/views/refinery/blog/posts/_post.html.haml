@@ -6,7 +6,7 @@
     .year
       = @post.published_at.to_date.strftime("%Y")
     .photo
-      - if @post.author.thumbnail_image.present?
+      - if @post.author.present? && @post.author.thumbnail_image.present?
         = image_tag @post.author.thumbnail_image.thumbnail("100x110#").url
     .month
       = @post.published_at.to_date.strftime("%b")
